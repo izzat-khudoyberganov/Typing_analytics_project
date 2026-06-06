@@ -1,10 +1,10 @@
 
 
-IF OBJECT_ID('silver.dim_test_config', 'U') IS NOT NULL
-  DROP TABLE silver.dim_test_config
+IF OBJECT_ID('silver.test_config', 'U') IS NOT NULL
+  DROP TABLE silver.test_config
 GO
 
-CREATE TABLE silver.dim_test_config
+CREATE TABLE silver.test_config
 (
   config_id INT IDENTITY(1,1),
   mode VARCHAR(50),
@@ -24,37 +24,36 @@ CREATE TABLE silver.dim_test_config
 )
 GO
 
-IF OBJECT_ID('silver.dim_date', 'U') IS NOT NULL
-  DROP TABLE silver.dim_date
+IF OBJECT_ID('silver.date_info', 'U') IS NOT NULL
+  DROP TABLE silver.date_info
 GO
 
-CREATE TABLE silver.dim_date
+CREATE TABLE silver.date_info
 (
   date_key INT IDENTITY(1,1),
   [timestamp] VARCHAR(50),
-  date_day INT,           
-  date_month VARCHAR(20), 
-  date_year INT,          
+  date_day INT,
+  date_month VARCHAR(20),
+  date_year INT,
   day_of_week VARCHAR(20),
   is_weekend VARCHAR(20),
   created_at DATETIME DEFAULT GETDATE()
 )
 
-IF OBJECT_ID('silver.fact_typing_tests', 'U') IS NOT NULL
-  DROP TABLE silver.fact_typing_tests
+IF OBJECT_ID('silver.typing_tests', 'U') IS NOT NULL
+  DROP TABLE silver.typing_tests
 GO
 
-CREATE TABLE silver.fact_typing_tests
+CREATE TABLE silver.typing_tests
 (
-  fact_id INT IDENTITY(1,1),
-  original_id VARCHAR(100),
-  config_id INT,
-  date_key INT,
-  wpm DECIMAL(10, 2),
-  acc DECIMAL(10, 2),
-  rawWpm DECIMAL(10, 2),
-  consistency DECIMAL(10, 2),
-  testDuration DECIMAL(10, 2),
-  [timestamp] VARCHAR(50)
+  id VARCHAR(100),
+  wpm DECIMAL(5, 2),
+  acc DECIMAL(5, 2),
+  rawWpm DECIMAL(5, 2),
+  consistency DECIMAL(5, 2),
+  test_duration DECIMAL(8, 2),
+  test_datetime DATETIME2,
+  skill_level VARCHAR(20),
+  created_at DATETIME DEFAULT GETDATE()
 )
 GO

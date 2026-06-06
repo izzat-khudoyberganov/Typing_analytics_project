@@ -2,10 +2,10 @@ CREATE OR ALTER PROCEDURE silver.load_silver
 AS
 BEGIN
   BEGIN TRY
-      PRINT '>> Truncating Table: silver.dim_test_config';
+      PRINT '>> Truncating Table: silver.test_config';
       TRUNCATE TABLE silver.dim_test_config
-      PRINT '>> Inserting Data Into: silver.dim_test_config';
-      INSERT INTO silver.dim_test_config
+      PRINT '>> Inserting Data Into: silver.test_config';
+      INSERT INTO silver.test_config
     (
     mode,
     mode2,
@@ -41,10 +41,10 @@ BEGIN
   FROM bronze.results;
 
 
-      PRINT '>> Truncating Table: silver.dim_date';
-      TRUNCATE TABLE silver.dim_date
-      PRINT '>> Inserting Data into: silver.dim_date'
-      INSERT INTO silver.dim_date
+      PRINT '>> Truncating Table: silver.date_info';
+      TRUNCATE TABLE silver.date_info
+      PRINT '>> Inserting Data into: silver.date_info'
+      INSERT INTO silver.date_info
     (
     [timestamp],
     date_day,
