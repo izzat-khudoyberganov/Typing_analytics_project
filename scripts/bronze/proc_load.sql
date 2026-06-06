@@ -4,7 +4,7 @@ BEGIN
     BEGIN TRY
     TRUNCATE TABLE bronze.results
     BULK INSERT bronze.results
-    FROM 'C:\Users\Izzat\Downloads\results.csv'
+    FROM 'C:\SQL2022\DataWarehouse\monkeytype\results.csv'
     WITH (
         FIRSTROW=2,
         FIELDTERMINATOR=',',
@@ -21,4 +21,4 @@ BEGIN CATCH
 END CATCH
 END
 
-
+EXEC bronze.load_bronze
