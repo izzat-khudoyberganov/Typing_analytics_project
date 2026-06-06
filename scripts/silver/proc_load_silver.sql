@@ -3,9 +3,9 @@ AS
 BEGIN
   BEGIN TRY
       PRINT '>> Truncating Table: silver.test_config';
-      TRUNCATE TABLE silver.dim_test_config
+      TRUNCATE TABLE silver.test_config
       PRINT '>> Inserting Data Into: silver.test_config';
-      INSERT INTO silver.test_config
+  INSERT INTO silver.test_config
     (
     mode,
     mode2,
@@ -41,10 +41,10 @@ BEGIN
   FROM bronze.results;
 
 
-      PRINT '>> Truncating Table: silver.date_info';
-      TRUNCATE TABLE silver.date_info
-      PRINT '>> Inserting Data into: silver.date_info'
-      INSERT INTO silver.date_info
+  PRINT '>> Truncating Table: silver.date_info';
+  TRUNCATE TABLE silver.date_info
+  PRINT '>> Inserting Data into: silver.date_info'
+  INSERT INTO silver.date_info
     (
     [timestamp],
     date_day,
@@ -70,6 +70,49 @@ BEGIN
     FROM
       bronze.results
     ) t
+
+    PRINT '>> Truncating Table: silver.typing_tests';
+    TRUNCATE TABLE silver.typing_tests
+    PRINT '>> Inserting Data into: silver.typing_tests'
+INSERT INTO silver.typing_tests
+    (
+    id,
+    wpm,
+    acc,
+    rawWpm,
+    consistency,
+    test_duration,
+    skill_level,
+    test_datetime
+    )
+  SELECT
+    id,
+    TRY_CAST(wpm as decimal(5,2)) AS wpm,
+    TRY_CAST(acc  as decimal(5,2)) as acc,
+    rawWpm,
+    consistency,
+    testDuration,
+    CASE
+    WHEN TRY_CAST( wpm as decimal(5,2)) < 30 THEN 'Normal'
+    WHEN TRY_CAST( wpm as decimal(5,2)) < 60 THEN 'Expert'
+    ELSE 'Master'
+END AS skill_level,
+    DATEADD(second, TRY_CAST(timestamp as bigint) / 1000, '1970-01-01')  AS test_datetime
+  FROM (
+  select
+      *,
+      ROW_NUMBER() OVER (
+    PARTITION BY id
+    ORDER BY timestamp DESC
+) as rn
+    from bronze.results
+) t
+  WHERE rn = 1
+    and wpm IS NOT NULL
+    AND acc IS NOT NULL
+    AND testDuration IS NOT NULL
+
+
     END TRY
     BEGIN CATCH
         PRINT '====================================================='

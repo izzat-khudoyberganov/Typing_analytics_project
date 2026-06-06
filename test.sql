@@ -37,4 +37,8 @@ WHERE rn = 1
   AND testDuration IS NOT NULL
 
 
-SELECT * FROM silver.typing_tests
+
+
+select * from silver.typing_tests
+
+exec silver.load_silver
