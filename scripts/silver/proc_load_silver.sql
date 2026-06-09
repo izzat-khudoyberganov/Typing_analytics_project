@@ -7,6 +7,7 @@ BEGIN
       PRINT '>> Inserting Data Into: silver.test_config';
   INSERT INTO silver.test_config
     (
+    id,
     mode,
     mode2,
     quoteLength,
@@ -22,6 +23,7 @@ BEGIN
     isPb
     )
   SELECT
+    id,
     mode,
     mode2,
     case 
@@ -46,6 +48,7 @@ BEGIN
   PRINT '>> Inserting Data into: silver.date_info'
   INSERT INTO silver.date_info
     (
+    id,
     [timestamp],
     date_day,
     date_month,
@@ -54,6 +57,7 @@ BEGIN
     is_weekend
     )
   SELECT
+    id,
     [timestamp],
     DAY(full_date) as date_day,
     FORMAT(full_date, 'MMM') as date_month,
@@ -65,11 +69,13 @@ BEGIN
         END AS is_weekend
   FROM (
       SELECT
+      id,
       [timestamp],
       DATEADD(second, CAST(timestamp as bigint) / 1000, '1970-01-01') AS full_date
     FROM
       bronze.results
     ) t
+    
 
     PRINT '>> Truncating Table: silver.typing_tests';
     TRUNCATE TABLE silver.typing_tests

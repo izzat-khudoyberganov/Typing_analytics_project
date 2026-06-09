@@ -6,7 +6,7 @@ GO
 
 CREATE TABLE silver.test_config
 (
-  config_id INT IDENTITY(1,1),
+  id VARCHAR(100) PRIMARY KEY,
   mode VARCHAR(50),
   mode2 INT,
   quoteLength VARCHAR(50),
@@ -30,7 +30,7 @@ GO
 
 CREATE TABLE silver.date_info
 (
-  date_key INT IDENTITY(1,1),
+  id VARCHAR(100) PRIMARY KEY,
   [timestamp] VARCHAR(50),
   date_day INT,
   date_month VARCHAR(20),
@@ -39,6 +39,7 @@ CREATE TABLE silver.date_info
   is_weekend VARCHAR(20),
   created_at DATETIME DEFAULT GETDATE()
 )
+GO
 
 IF OBJECT_ID('silver.typing_tests', 'U') IS NOT NULL
   DROP TABLE silver.typing_tests
@@ -46,7 +47,7 @@ GO
 
 CREATE TABLE silver.typing_tests
 (
-  id VARCHAR(100),
+  id VARCHAR(100) PRIMARY KEY,
   wpm DECIMAL(5, 2),
   acc DECIMAL(5, 2),
   rawWpm DECIMAL(5, 2),

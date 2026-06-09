@@ -1,10 +1,10 @@
--- Check for duplicate config_id in test_config table
--- Expectation: No duplicate config_id values should exist
+-- Check for duplicate id in test_config table
+-- Expectation: No duplicate id values should exist
 SELECT
-    config_id,
+    id,
     COUNT(*)
 FROM silver.test_config
-GROUP BY config_id
+GROUP BY id
 HAVING COUNT(*) > 1
 
 
@@ -16,9 +16,9 @@ FROM silver.test_config
 
 -- Check for duplicate id in typing_tests table
 -- Expectation: No duplicate id values should exist
-SELECT date_key, COUNT(*)
+SELECT id, COUNT(*)
 FROM silver.date_info
-GROUP BY date_key
+GROUP BY id
 HAVING COUNT(*) > 1
 
 

@@ -5,7 +5,7 @@ GO
 CREATE VIEW gold.dim_test_config
 AS
     SELECT
-        config_id AS id,
+        id,
         mode,
         mode2,
         quoteLength as quote_length,
@@ -30,7 +30,7 @@ GO
 CREATE VIEW gold.dim_date_info
 AS
     SELECT
-        date_key AS id,
+        id,
         date_day AS day,
         date_month AS month,
         date_year AS year,
@@ -48,19 +48,26 @@ CREATE VIEW gold.fact_typing_tests
 AS
     SELECT
         t.id,
-        c.config_id AS config_id,
-        d.date_key AS date_key,
-        d.date_key AS date_id,
-        t.wpm,
-        t.acc,
-        t.rawWpm AS raw_wpm,
+        t.wpm  AS word_per_minute,
+        t.acc  AS accuracy_percentage,
+        t.rawWpm,
         t.consistency,
-        t.test_duration AS test_duration_seconds,
+        t.test_duration,
+        t.skill_level,
         t.test_datetime,
-        t.skill_level
+
+        -- Config data
+        c.mode,
+        c.difficulty,
+        c.[language],
+        c.isPb AS is_personal_best,
+        c.punctuation,
+
+        -- Date info
+        d.date_month,
+        d.day_of_week,
+        d.is_weekend
     FROM silver.typing_tests t
-        LEFT JOIN silver.test_config c
-        ON t.id = c.config_id
-        LEFT JOIN silver.date_info d
-        ON t.test_datetime = DATEADD(second, TRY_CAST(d.[timestamp] as bigint) / 1000, '1970-01-01');
+        LEFT JOIN silver.test_config c ON t.id = c.id
+        LEFT JOIN silver.date_info d ON t.id = d.id
 GO
