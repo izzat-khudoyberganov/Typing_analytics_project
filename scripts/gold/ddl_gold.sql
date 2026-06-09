@@ -40,8 +40,8 @@ AS
 GO
 
 
-if OBJECT_ID('gold.fact_typing_tests', 'V') IS NOT NULL
-  DROP VIEW gold.fact_typing_tests
+IF OBJECT_ID('gold.fact_typing_tests', 'V') IS NOT NULL
+    DROP VIEW gold.fact_typing_tests
 GO
 
 CREATE VIEW gold.fact_typing_tests
@@ -51,10 +51,9 @@ AS
         t.wpm  AS word_per_minute,
         t.acc  AS accuracy_percentage,
         t.rawWpm,
-        t.consistency,
+        t.consistency AS consistency_percentage,
         t.test_duration,
         t.skill_level,
-        t.test_datetime,
 
         -- Config data
         c.mode,
@@ -66,7 +65,8 @@ AS
         -- Date info
         d.date_month,
         d.day_of_week,
-        d.is_weekend
+        d.is_weekend,
+        t.test_datetime
     FROM silver.typing_tests t
         LEFT JOIN silver.test_config c ON t.id = c.id
         LEFT JOIN silver.date_info d ON t.id = d.id
