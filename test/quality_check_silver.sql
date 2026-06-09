@@ -53,9 +53,3 @@ WHERE (wpm < 0 OR wpm > 500 OR wpm IS NULL)
 SELECT DISTINCT skill_level
 FROM silver.typing_tests
 WHERE skill_level NOT IN ('Normal', 'Expert', 'Master')
-
-
-
-
-
-

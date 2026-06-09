@@ -1,5 +1,3 @@
-
-
 IF OBJECT_ID('silver.test_config', 'U') IS NOT NULL
   DROP TABLE silver.test_config
 GO

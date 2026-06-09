@@ -48,7 +48,7 @@ CREATE VIEW gold.fact_typing_tests
 AS
     SELECT
         t.id,
-        t.wpm  AS word_per_minute,
+        t.wpm  AS words_per_minute,
         t.acc  AS accuracy_percentage,
         t.rawWpm,
         t.consistency AS consistency_percentage,
